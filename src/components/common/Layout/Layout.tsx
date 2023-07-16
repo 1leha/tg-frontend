@@ -1,14 +1,6 @@
 import { Header } from '../Header';
 import { Outlet } from 'react-router-dom';
-import {
-  // AppBar,
-  Box,
-  // Button,
-  Container,
-  // Toolbar,
-  // Typography,
-  Paper,
-} from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 export const Layout = () => {
   return (
