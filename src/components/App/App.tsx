@@ -1,7 +1,9 @@
-import { LoginPage, RegistrationPage } from "../../pages";
-import { Layout } from "../common";
-import { Route, Routes } from "react-router-dom";
-import { TaskPage } from "../../pages";
+import { LoginPage, RegistrationPage } from '../../pages';
+import { Layout } from '../common';
+import { Route, Routes } from 'react-router-dom';
+import { TaskPage } from '../../pages';
+
+//rest
 
 function App() {
   return (
