@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   AppBar,
   Box,
@@ -6,15 +6,15 @@ import {
   Container,
   Toolbar,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
 export const Header = () => {
   return (
-    <AppBar position="fixed">
+    <AppBar position="static" sx={{ mb: 3 }}>
       <Container fixed>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            TG task manager
+            TG task menager
           </Typography>
           <Box>
             <Button color="inherit" variant="text">
