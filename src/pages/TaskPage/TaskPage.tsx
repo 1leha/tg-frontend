@@ -1,5 +1,10 @@
-import React from "react";
+import { Outlet } from 'react-router';
 
 export const TaskPage = () => {
-  return <div>TaskPage</div>;
+  return (
+    <>
+      {/* <div>TaskPage</div> */}
+      <Outlet />
+    </>
+  );
 };
