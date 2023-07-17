@@ -9,7 +9,7 @@ export const PrivateRoute = ({
   redirectTo = '/',
   element: Element,
 }: IRoutesProps) => {
-  const token = 1;
+  const token = 0;
   const shouldRedirect = !token;
 
   return shouldRedirect ? <Navigate to={redirectTo} replace /> : Element;
