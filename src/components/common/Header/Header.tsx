@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AppBar,
   Box,
@@ -7,6 +6,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 export const Header = () => {
   return (
@@ -17,10 +17,10 @@ export const Header = () => {
             TG task menager
           </Typography>
           <Box>
-            <Button color="inherit" variant="text">
+            <Button color="inherit" component={NavLink} to={'login'}>
               Login
             </Button>
-            <Button color="inherit" variant="text">
+            <Button color="inherit" component={NavLink} to={'/'}>
               Register
             </Button>
           </Box>
