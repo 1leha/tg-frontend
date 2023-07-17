@@ -20,7 +20,7 @@ export const Header = () => {
             <Button color="inherit" component={NavLink} to={'login'}>
               Login
             </Button>
-            <Button color="inherit" component={NavLink} to={'/'}>
+            <Button color="inherit" component={NavLink} to={'register'}>
               Register
             </Button>
           </Box>
