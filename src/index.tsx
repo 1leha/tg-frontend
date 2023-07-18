@@ -5,6 +5,11 @@ import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_HOST_BACKEND,
@@ -18,9 +23,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <BrowserRouter basename="/tg-frontend">
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter basename="/tg-frontend">
+            <App />
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
     </ApolloProvider>
   </React.StrictMode>
 );
