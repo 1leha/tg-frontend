@@ -1,8 +1,14 @@
 import { Typography, TextField, Container, Button, Box } from '@mui/material';
+import { gql, useMutation } from '@apollo/client';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
-const validationSchema = yup.object({
+interface IFormValue {
+  email: string;
+  password: string;
+}
+
+const authValidationSchema = yup.object({
   email: yup
     .string()
     .required('E-mail is required!')
@@ -13,10 +19,39 @@ const validationSchema = yup.object({
   password: yup.string().required('Password is required!'),
 });
 
+const M_RegisterUser = gql`
+  mutation registerUser($user: CreateUserInput!) {
+    registerUser(registerUser: $user) {
+      id
+      email
+      token
+    }
+  }
+`;
+
 export const RegistrationPage = () => {
   const initialValues = {
     email: '',
     password: '',
+  };
+
+  const [registerUser, { data, loading, error }] = useMutation(M_RegisterUser, {
+    onError(error) {
+      console.log('registerUser error :>> ', error.message);
+    },
+  });
+
+  if (!error && !loading) {
+    console.log('registerUser >> data :>> ', data?.registerUser);
+    data?.registerUser &&
+      localStorage.setItem('token', data?.registerUser.token);
+  }
+
+  const submitHandler = (values: IFormValue, actions: any) => {
+    registerUser({ variables: { user: values } });
+
+    actions.resetForm();
+    actions.setSubmitting(false);
   };
 
   return (
@@ -36,10 +71,8 @@ export const RegistrationPage = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={value => {
-            console.log(value);
-          }}
-          validationSchema={validationSchema}
+          onSubmit={submitHandler}
+          validationSchema={authValidationSchema}
         >
           {formik => (
             <Form>
@@ -70,9 +103,14 @@ export const RegistrationPage = () => {
                 }
                 helperText={formik.touched.password && formik.errors.password}
               />
-
-              <Button type="submit" variant="contained">
-                Register
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                fullWidth
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Register'}
               </Button>
             </Form>
           )}
