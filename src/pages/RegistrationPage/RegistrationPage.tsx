@@ -1,54 +1,43 @@
 import { Typography, TextField, Container, Button, Box } from '@mui/material';
-import { gql, useMutation } from '@apollo/client';
 import { Formik, Form } from 'formik';
-import * as yup from 'yup';
-
-interface IFormValue {
-  email: string;
-  password: string;
-}
-
-const authValidationSchema = yup.object({
-  email: yup
-    .string()
-    .required('E-mail is required!')
-    .matches(
-      /^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$/,
-      'Input valid e-mail!'
-    ),
-  password: yup.string().required('Password is required!'),
-});
-
-const M_RegisterUser = gql`
-  mutation registerUser($user: CreateUserInput!) {
-    registerUser(registerUser: $user) {
-      id
-      email
-      token
-    }
-  }
-`;
+import { ICredentials } from '../../helpers/interfaces/auth';
+import { authValidationSchema } from '../../helpers/validation/authValidation';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import * as operation from '../../redux/auth/auth.operations';
+import { RegisterUserMutation } from '../../helpers/gql/mutations';
+import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 export const RegistrationPage = () => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
+
+  const [registerUser, { data, loading, error }] = useMutation(
+    RegisterUserMutation,
+    {
+      onError(error) {
+        toast.error(error.message);
+      },
+    }
+  );
+
+  useEffect(() => {
+    dispatch(operation.registerUser(data?.registerUser));
+  }, [data, dispatch]);
+
+  // console.log('loading :>> ', loading);
+  // console.log('error :>> ', error);
+  // console.log('data :>> ', data);
+
   const initialValues = {
     email: '',
     password: '',
   };
 
-  const [registerUser, { data, loading, error }] = useMutation(M_RegisterUser, {
-    onError(error) {
-      console.log('registerUser error :>> ', error.message);
-    },
-  });
-
-  if (!error && !loading) {
-    console.log('registerUser >> data :>> ', data?.registerUser);
-    data?.registerUser &&
-      localStorage.setItem('token', data?.registerUser.token);
-  }
-
-  const submitHandler = (values: IFormValue, actions: any) => {
-    registerUser({ variables: { user: values } });
+  const submitHandler = (credentials: ICredentials, actions: any) => {
+    registerUser({ variables: { user: credentials } });
 
     actions.resetForm();
     actions.setSubmitting(false);
