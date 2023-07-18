@@ -9,7 +9,7 @@ export const RestrictedRoute = ({
   redirectTo = '/',
   element: Element,
 }: IRoutesProps) => {
-  const token = 0;
+  const token = Number(process.env.REACT_APP_TOKEN_MOCK);
   const shouldRedirect = token;
 
   return shouldRedirect ? <Navigate to={redirectTo} replace /> : Element;
