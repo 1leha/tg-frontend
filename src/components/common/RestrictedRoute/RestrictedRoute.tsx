@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../../helpers/hooks/useAuth';
 
 export interface IRoutesProps {
   element: JSX.Element;
@@ -9,8 +10,7 @@ export const RestrictedRoute = ({
   redirectTo = '/',
   element: Element,
 }: IRoutesProps) => {
-  const token = Number(process.env.REACT_APP_TOKEN_MOCK);
-  const shouldRedirect = token;
+  const { isLoggedIn } = useAuth();
 
-  return shouldRedirect ? <Navigate to={redirectTo} replace /> : Element;
+  return isLoggedIn ? <Navigate to={redirectTo} replace /> : Element;
 };

@@ -18,6 +18,7 @@ export const RegistrationPage = () => {
     RegisterUserMutation,
     {
       onError(error) {
+        console.log('object :>> ', error.message);
         toast.error(error.message);
       },
     }
