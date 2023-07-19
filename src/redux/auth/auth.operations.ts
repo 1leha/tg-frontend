@@ -21,6 +21,19 @@ export const registerUser = createAsyncThunk<IAuth, IAuth>(
     return authData as IAuth;
   }
 );
+
+//Register
+export const loginUser = createAsyncThunk<IAuth, IAuth>(
+  'auth/login',
+  (authData, _) => {
+    console.log('authData :>> ', authData);
+
+    const { token } = authData;
+    setAuthHeader(token);
+    return authData as IAuth;
+  }
+);
+
 //Logout
 export const logout = createAsyncThunk('auth/logout', (_, __) => {
   console.log('logout Operation :>> ');

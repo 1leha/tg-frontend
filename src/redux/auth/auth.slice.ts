@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IAuthState } from '../../helpers/interfaces/auth';
 import {
-  // login,
+  loginUser,
   logout,
   // refresh,
   registerUser,
@@ -36,11 +36,16 @@ const authSlice = createSlice({
       })
 
       // Login
-      //   .addCase(login.fulfilled, (state, { payload }) => {
-      //     state.isLoggedIn = true;
-      //     state.token = payload.token;
-      //     state.user = payload.user;
-      //   })
+      .addCase(loginUser.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        state.id = payload.id;
+        state.email = payload.email;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
 
       // Logout
       .addCase(logout.pending, state => {

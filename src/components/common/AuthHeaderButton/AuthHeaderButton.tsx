@@ -15,7 +15,6 @@ export const AuthHeaderButton = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
   const handlerLogout = () => {
-    console.log('Logout');
     dispatch(logout());
   };
 
