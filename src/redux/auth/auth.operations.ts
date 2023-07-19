@@ -6,11 +6,11 @@ const setAuthHeader = (token: String): void => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-// const clearAuthHeader = (): void => {
-//   axios.defaults.headers.common.Authorization = '';
-// };
+const clearAuthHeader = (): void => {
+  axios.defaults.headers.common.Authorization = '';
+};
 
-//Register user
+//Register
 export const registerUser = createAsyncThunk<IAuth, IAuth>(
   'auth/register',
   (authData, _) => {
@@ -21,3 +21,9 @@ export const registerUser = createAsyncThunk<IAuth, IAuth>(
     return authData as IAuth;
   }
 );
+//Logout
+export const logout = createAsyncThunk('auth/logout', (_, __) => {
+  console.log('logout Operation :>> ');
+
+  clearAuthHeader();
+});

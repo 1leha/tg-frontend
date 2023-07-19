@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IAuthState } from '../../helpers/interfaces/auth';
 import {
   // login,
-  // logout,
+  logout,
   // refresh,
   registerUser,
 } from './auth.operations';
@@ -24,31 +24,35 @@ const authSlice = createSlice({
     builder
 
       // Register
+      .addCase(registerUser.pending, state => {
+        state.isRefreshing = true;
+      })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
-        console.log('payload :>> ', payload);
         state.id = payload.id;
         state.email = payload.email;
         state.token = payload.token;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+
+      // Login
+      //   .addCase(login.fulfilled, (state, { payload }) => {
+      //     state.isLoggedIn = true;
+      //     state.token = payload.token;
+      //     state.user = payload.user;
+      //   })
+
+      // Logout
+      .addCase(logout.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(logout.fulfilled, state => {
+        state.id = initialAuthState.id;
+        state.email = initialAuthState.email;
+        state.token = initialAuthState.token;
+        state.isLoggedIn = false;
+        state.isRefreshing = false;
       });
-
-    // Login
-    //   .addCase(login.fulfilled, (state, { payload }) => {
-    //     state.isLoggedIn = true;
-    //     state.token = payload.token;
-    //     state.user = payload.user;
-    //   })
-
-    // Logout
-    //   .addCase(logout.pending, state => {
-    //     state.isRefreshing = true;
-    //   })
-    //   .addCase(logout.fulfilled, state => {
-    //     state.isLoggedIn = false;
-    //     state.token = null;
-    //     state.user = { name: null, email: null };
-    //     state.isRefreshing = false;
-    //   })
 
     // Refresh
     //   .addCase(refresh.pending, state => {
