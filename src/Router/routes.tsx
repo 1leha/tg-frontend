@@ -11,21 +11,18 @@ export const routes = [
     children: [
       {
         path: '/',
-        element: <PrivateRoute redirectTo="register" element={<TaskPage />} />,
+        element: <PrivateRoute redirectTo="login" element={<TaskPage />} />,
         children: [
           {
             path: '/',
             element: (
-              <PrivateRoute redirectTo="register" element={<Categories />} />
+              <PrivateRoute redirectTo="login" element={<Categories />} />
             ),
           },
           {
             path: ':categoryId',
             element: (
-              <PrivateRoute
-                redirectTo="register"
-                element={<div>Task List</div>}
-              />
+              <PrivateRoute redirectTo="login" element={<div>Task List</div>} />
             ),
           },
         ],

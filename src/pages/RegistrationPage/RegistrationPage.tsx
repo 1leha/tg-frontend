@@ -14,23 +14,15 @@ import { useEffect } from 'react';
 export const RegistrationPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
-  const [registerUser, { data, loading, error }] = useMutation(
-    RegisterUserMutation,
-    {
-      onError(error) {
-        console.log('object :>> ', error.message);
-        toast.error(error.message);
-      },
-    }
-  );
+  const [registerUser, { data, loading }] = useMutation(RegisterUserMutation, {
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
 
   useEffect(() => {
     dispatch(operation.registerUser(data?.registerUser));
   }, [data, dispatch]);
-
-  // console.log('loading :>> ', loading);
-  // console.log('error :>> ', error);
-  // console.log('data :>> ', data);
 
   const initialValues = {
     email: '',
