@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import * as operation from '../../redux/auth/auth.operations';
-import { LoginUserMutation } from '../../helpers/gql/mutations';
+import { LOGIN_USER_MUTATION } from '../../helpers/gql/mutations';
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 export const LoginPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
-  const [loginUser, { data, loading }] = useMutation(LoginUserMutation, {
+  const [loginUser, { data, loading }] = useMutation(LOGIN_USER_MUTATION, {
     onError(error) {
       toast.error(error.message);
     },
