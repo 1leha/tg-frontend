@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import * as operation from '../../redux/auth/auth.operations';
-import { RegisterUserMutation } from '../../helpers/gql/mutations';
+import { REGISTER_USER_MUTATION } from '../../helpers/gql/mutations';
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
@@ -14,11 +14,14 @@ import { useEffect } from 'react';
 export const RegistrationPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
-  const [registerUser, { data, loading }] = useMutation(RegisterUserMutation, {
-    onError(error) {
-      toast.error(error.message);
-    },
-  });
+  const [registerUser, { data, loading }] = useMutation(
+    REGISTER_USER_MUTATION,
+    {
+      onError(error) {
+        toast.error(error.message);
+      },
+    }
+  );
 
   useEffect(() => {
     dispatch(operation.registerUser(data?.registerUser));

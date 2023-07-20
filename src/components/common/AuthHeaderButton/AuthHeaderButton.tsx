@@ -3,18 +3,17 @@ import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../../redux/auth/auth.operations';
-
-export enum EAuthButtons {
-  login = 'Login',
-  register = 'Register',
-  logout = 'Logout',
-}
+import { useMutation } from '@apollo/client';
+import { LOGOUT_USER_MUTATION } from '../../../helpers/gql/mutations';
+import { EAuthButtons } from '../../../helpers/enums/authButtons';
 
 export const AuthHeaderButton = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
+  const [registerUser] = useMutation(LOGOUT_USER_MUTATION);
 
   const handlerLogout = () => {
+    registerUser();
     dispatch(logout());
   };
 
@@ -24,7 +23,7 @@ export const AuthHeaderButton = () => {
         <Button
           color="inherit"
           component={NavLink}
-          to={EAuthButtons.login.toLocaleLowerCase()}
+          to={EAuthButtons.login.toLowerCase()}
         >
           {EAuthButtons.login}
         </Button>
@@ -35,7 +34,7 @@ export const AuthHeaderButton = () => {
         <Button
           color="inherit"
           component={NavLink}
-          to={EAuthButtons.register.toLocaleLowerCase()}
+          to={EAuthButtons.register.toLowerCase()}
         >
           {EAuthButtons.register}
         </Button>
@@ -46,7 +45,7 @@ export const AuthHeaderButton = () => {
         <Button
           color="inherit"
           component={NavLink}
-          to={EAuthButtons.logout.toLocaleLowerCase()}
+          to={EAuthButtons.logout.toLowerCase()}
           onClick={handlerLogout}
         >
           {EAuthButtons.logout}

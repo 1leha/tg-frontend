@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { useQuery } from '@apollo/client';
-import { getCurrentUserQuery } from '../../helpers/gql/queries';
+import { GET_CURRENT_USER_QUERY } from '../../helpers/gql/queries';
 import { refresh } from '../../redux/auth/auth.operations';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
-  const { data } = useQuery(getCurrentUserQuery);
+  const { data } = useQuery(GET_CURRENT_USER_QUERY);
 
   useEffect(() => {
     if (token) {
