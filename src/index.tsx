@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
@@ -11,8 +18,24 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: process.env.REACT_APP_HOST_BACKEND,
+});
+
+const authLink = setContext((_, { headers }) => {
+  const authLocaleValue = localStorage.getItem('persist:auth');
+  const token = authLocaleValue?.split('\\"')[1];
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

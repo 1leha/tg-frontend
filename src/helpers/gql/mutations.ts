@@ -9,6 +9,7 @@ export const RegisterUserMutation = gql`
     }
   }
 `;
+
 export const LoginUserMutation = gql`
   mutation loginUser($user: LoginUserInput!) {
     loginUser(loginUser: $user) {
