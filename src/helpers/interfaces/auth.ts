@@ -10,9 +10,9 @@ export interface IAuth {
 }
 
 export interface IAuthState {
-  id: null | number;
-  email: null | string;
-  token: null | string;
-  isLoggedIn: boolean;
-  isRefreshing: boolean;
+  id?: null | number;
+  email?: null | string;
+  token?: null | string;
+  isLoggedIn?: boolean;
+  isRefreshing?: boolean;
 }

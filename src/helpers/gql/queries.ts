@@ -15,14 +15,24 @@ export const GET_ALL_CATEGORIES = gql`
       id
       name
       userId
-      user {
-        id
-        email
-      }
-      task {
-        id
-        name
-      }
+    }
+  }
+`;
+
+export const GET_CURRENT_USER_CATEGORIES = gql`
+  query {
+    getCurrentUserCategories {
+      id
+      name
+    }
+  }
+`;
+
+export const GET_USER_CATEGORIES = gql`
+  query getUserCategoriesQuery($id: Float!) {
+    categories(id: $id) {
+      id
+      name
     }
   }
 `;
