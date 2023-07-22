@@ -1,5 +1,11 @@
-import React from "react";
+import { useLocation, useParams } from 'react-router';
 
 export const TaskList = () => {
-  return <div>TaskList</div>;
+  const params = useParams();
+  const { state } = useLocation();
+
+  console.log('params', params);
+  console.log('state', state);
+
+  return state && <div>TaskList for {state?.category.name}</div>;
 };

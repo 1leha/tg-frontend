@@ -1,4 +1,4 @@
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { AppRouter } from '../../Router/Router';
 import { useAuth } from '../../helpers/hooks/useAuth';
 import { useEffect } from 'react';
@@ -13,25 +13,31 @@ function App() {
 
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
-  const [getCurrentUser, { loading }] = useLazyQuery(GET_CURRENT_USER_QUERY);
+  const [getCurrentUser, { loading, error }] = useLazyQuery(
+    GET_CURRENT_USER_QUERY
+  );
 
   useEffect(() => {
     if (token && !isLoggedIn) {
       console.log('NEED TO REFRESH');
       (async () => {
-        const res = await getCurrentUser();
-        const currentUser = await res.data.getCurrentUser;
-        console.log('useEffect user', currentUser);
-        dispatch(
-          refresh({
-            token,
-            id: currentUser.id,
-            email: currentUser.email,
-          })
-        );
+        try {
+          const res = await getCurrentUser();
+          const currentUser = await res.data.getCurrentUser;
+          console.log('useEffect user', currentUser);
+          dispatch(
+            refresh({
+              token,
+              id: currentUser.id,
+              email: currentUser.email,
+            })
+          );
+        } catch (err) {
+          if (error) toast.error('User not loggenid in!');
+        }
       })();
     }
-  }, [token, isLoggedIn, getCurrentUser, dispatch]);
+  }, [token, error, isLoggedIn, getCurrentUser, dispatch]);
 
   return (
     <>
