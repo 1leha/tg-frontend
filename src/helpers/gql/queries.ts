@@ -36,3 +36,18 @@ export const GET_USER_CATEGORIES = gql`
     }
   }
 `;
+
+export const GET_TASK_BY_CATEGORY_ID = gql`
+  query getTasksByCategoryId($categoryId: Float!) {
+    tasks(categoryId: $categoryId) {
+      id
+      name
+      dataStart
+      dataEnd
+      category {
+        id
+        name
+      }
+    }
+  }
+`;
