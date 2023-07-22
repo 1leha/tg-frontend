@@ -2,6 +2,9 @@ import { useLazyQuery } from '@apollo/client';
 import { GET_USER_CATEGORIES } from '../../helpers/gql/queries';
 import { useAuth } from '../../helpers/hooks/useAuth';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Container, Paper } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 interface ICategory {
   id?: number;
@@ -11,26 +14,32 @@ interface ICategory {
 
 export const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
-  const { email, token, userId } = useAuth();
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-  console.log('useAuth userId', userId);
-  console.log('useAuth email', email);
-  console.log('useAuth token', token);
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  const { email, userId } = useAuth();
 
   const [getUserCategories, { data, loading, error }] =
     useLazyQuery(GET_USER_CATEGORIES);
 
   useEffect(() => {
-    getUserCategories({
-      variables: { id: Number(userId) },
-    })
-      .then(res => setCategories(res.data.categories))
-      .catch(err => console.log(error));
+    (async () => {
+      try {
+        const response = await getUserCategories({
+          variables: { id: Number(userId) },
+        });
+        setCategories(response.data.categories);
+      } catch (err) {
+        if (error) toast.error('Request error');
+      }
+    })();
   }, [error, getUserCategories, userId]);
 
-  console.log('Categories data :>> ', categories);
+  // console.log('Categories data :>> ', categories);
+
+  const handlerCategoryClick = (category: ICategory) => {
+    console.log('You clicked by: ', category.name);
+    navigate(`${category.id}`, { state: { category } });
+  };
 
   return (
     <>
@@ -39,9 +48,14 @@ export const Categories = () => {
           <div>
             Categories of user {email} {categories.length ?? 0}
           </div>
-          <ul>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
             {categories.map((category: ICategory) => (
-              <li key={category.id}>{category.name}</li>
+              <li
+                key={category.id}
+                onClick={() => handlerCategoryClick(category)}
+              >
+                <Paper sx={{ p: 2, m: 1 }}>{category.name}</Paper>
+              </li>
             ))}
           </ul>
         </>
