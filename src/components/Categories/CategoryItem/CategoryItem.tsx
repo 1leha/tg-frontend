@@ -1,17 +1,12 @@
-import { ICategory } from '../../../helpers/interfaces/categories';
+import { ICategory, IData } from '../../../helpers/interfaces/categories';
 import { format } from 'date-fns';
 
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router';
-import { Button, IconButton, Typography } from '@mui/material';
-import CommentIcon from '@mui/icons-material/Comment';
-
-interface IData {
-  data: ICategory;
-}
+import { Button, Typography } from '@mui/material';
+import { CategoryActions } from '../CategoryActions';
 
 export const CategoryItem = ({ data }: IData) => {
   const navigate = useNavigate();
@@ -33,9 +28,9 @@ export const CategoryItem = ({ data }: IData) => {
       sx={{ mb: 2 }}
       // disableGutters
       secondaryAction={
-        <Box>
-          <Button>Action</Button>
-          <Button>More</Button>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <CategoryActions data={data} />
+          <Button onClick={() => handlerCategoryClick(data)}>More</Button>
         </Box>
       }
       disablePadding

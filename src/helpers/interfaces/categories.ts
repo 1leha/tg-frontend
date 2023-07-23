@@ -8,3 +8,7 @@ export interface ICategory {
   dataCreated?: string;
   tasks?: ILength;
 }
+
+export interface IData {
+  data: ICategory;
+}

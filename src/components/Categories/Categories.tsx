@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { CategoryList } from './CategoryList';
 
 export const Categories = () => {
@@ -15,10 +15,7 @@ export const Categories = () => {
           justifyContent: 'end',
         }}
       >
-        {/* <Typography sx={{ flexGrow: 1 }}>1</Typography> */}
-        <Button variant="contained" sx={{}}>
-          Add category
-        </Button>
+        <Button variant="contained">Add category</Button>
       </Box>
 
       <CategoryList />
