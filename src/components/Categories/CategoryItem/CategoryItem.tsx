@@ -25,7 +25,7 @@ export const CategoryItem = ({ data }: IData) => {
       sx={{ mb: 2 }}
       // disableGutters
       secondaryAction={
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           <CategoryActions data={data} />
           <Button onClick={() => handlerCategoryClick(data)}>More</Button>
         </Box>
@@ -38,7 +38,6 @@ export const CategoryItem = ({ data }: IData) => {
           borderRadius: 2,
           flexGrow: 1,
           p: 2,
-          pr: 120,
         }}
         onClick={() => handlerCategoryClick(data)}
       >
@@ -46,10 +45,10 @@ export const CategoryItem = ({ data }: IData) => {
           <Typography sx={{ minWidth: '60px', flexGrow: 1, flexBasis: '50%' }}>
             {data.name}
           </Typography>
-          <Typography sx={{ minWidth: '40px', flexGrow: 1, flexBasis: '20%' }}>
+          <Typography sx={{ minWidth: '50px', flexGrow: 1, flexBasis: '20%' }}>
             {data.tasks?.length} {data.tasks?.length === 1 ? 'task' : 'tasks'}
           </Typography>
-          <Typography sx={{ minWidth: '60px', flexGrow: 0, flexBasis: '30%' }}>
+          <Typography sx={{ minWidth: '60px', flexGrow: 1, flexBasis: '30%' }}>
             {createdData}
           </Typography>
         </Box>
