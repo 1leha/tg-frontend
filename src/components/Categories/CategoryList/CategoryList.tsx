@@ -1,43 +1,51 @@
-import { useState, useEffect } from 'react';
-import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
-import { useLazyQuery } from '@apollo/client';
-import { useAuth } from '../../../helpers/hooks/useAuth';
-import { toast } from 'react-toastify';
-import { ICategory } from '../../../helpers/interfaces/categories';
 import { List } from '@mui/material';
-import { CategoryItem } from '../CategoryItem/CategoryItem';
+import {
+  GET_CURRENT_USER_QUERY,
+  GET_USER_CATEGORIES,
+} from '../../../helpers/gql/queries';
+import { useAuth } from '../../../helpers/hooks/useAuth';
+import { ICategory } from '../../../helpers/interfaces/categories';
+import { CategoryItem } from '../CategoryItem';
+import { useQuery } from '@apollo/client';
 
 export const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
   const { userId } = useAuth();
+  console.log('userId', userId);
 
   // const loc = useLocation();
   // console.log('loc', loc);
 
-  const [getUserCategories, { data, loading, error }] =
-    useLazyQuery(GET_USER_CATEGORIES);
+  const { data, loading, error } = useQuery(GET_USER_CATEGORIES, {
+    variables: { id: Number(userId) },
+    fetchPolicy: 'network-only',
+  });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await getUserCategories({
-          variables: { id: Number(userId) },
-        });
-        setCategories(response.data.categories);
-      } catch (err) {
-        if (error) toast.error('Request error');
-      }
-    })();
-  }, [error, getUserCategories, userId]);
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useQuery(GET_CURRENT_USER_QUERY, {
+    fetchPolicy: 'network-only',
+  });
 
-  // console.log('Categories data :>> ', categories);
+  // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  // console.log('userData', userData);
+  // console.log('userLoading', userLoading);
+  // console.log('userError', userError);
+  // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
+  // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  // console.log('data', data);
+  // console.log('loading', loading);
+  // console.log('error', error);
+  // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
   return (
     <>
-      {!loading && data && (
+      {!loading && !error && (
         <>
           <List sx={{ width: '100%' }}>
-            {categories.map((category: ICategory) => (
+            {data.categories.map((category: ICategory) => (
               <CategoryItem key={Number(category.id)} data={category} />
             ))}
           </List>

@@ -25,3 +25,18 @@ export const LOGOUT_USER_MUTATION = gql`
     logoutUser
   }
 `;
+
+export const CREATE_CATEGORY = gql`
+  mutation createCategory($category: CreateCategoryInput!) {
+    createCategory(createCategoryInput: $category) {
+      id
+      name
+      dataCreated
+      userId
+      user {
+        id
+        email
+      }
+    }
+  }
+`;

@@ -10,6 +10,7 @@ import { LOGIN_USER_MUTATION } from '../../helpers/gql/mutations';
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export const LoginPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
@@ -18,6 +19,7 @@ export const LoginPage = () => {
     onError(error) {
       toast.error(error.message);
     },
+    fetchPolicy: 'no-cache',
   });
 
   useEffect(() => {
@@ -29,8 +31,8 @@ export const LoginPage = () => {
     password: '',
   };
 
-  const submitHandler = (credentials: ICredentials, actions: any) => {
-    loginUser({ variables: { user: credentials } });
+  const submitHandler = async (credentials: ICredentials, actions: any) => {
+    await loginUser({ variables: { user: credentials } });
 
     actions.resetForm();
     actions.setSubmitting(false);

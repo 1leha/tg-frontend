@@ -12,9 +12,10 @@ export const AuthHeaderButton = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
   const [logoutUser] = useMutation(LOGOUT_USER_MUTATION);
 
-  const handlerLogout = () => {
-    logoutUser();
-    dispatch(logout());
+  const handlerLogout = async () => {
+    await logoutUser();
+    await dispatch(logout());
+    localStorage.clear();
   };
 
   switch (pathname) {
