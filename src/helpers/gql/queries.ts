@@ -33,6 +33,10 @@ export const GET_USER_CATEGORIES = gql`
     categories(id: $id) {
       id
       name
+      dataCreated
+      tasks {
+        length
+      }
     }
   }
 `;
