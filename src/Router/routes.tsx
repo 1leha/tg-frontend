@@ -1,5 +1,5 @@
 import { Categories } from '../components/Categories';
-import { TaskList } from '../components/Tasks/TaskList/TaskList';
+import { Tasks } from '../components/Tasks';
 import { Layout } from '../components/common';
 import { PrivateRoute } from '../components/common/PrivateRoute/PrivateRoute';
 import { RestrictedRoute } from '../components/common/RestrictedRoute/RestrictedRoute';
@@ -22,7 +22,7 @@ export const routes = [
           },
           {
             path: ':categoryId',
-            element: <PrivateRoute redirectTo="login" element={<TaskList />} />,
+            element: <PrivateRoute redirectTo="login" element={<Tasks />} />,
           },
         ],
       },

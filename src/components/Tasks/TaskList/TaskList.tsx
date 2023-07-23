@@ -17,7 +17,9 @@ interface ITask {
 export const TaskList = () => {
   const { categoryId } = useParams();
   const { state } = useLocation();
-  const { email } = useAuth();
+
+  // const loc = useLocation();
+  // console.log('loc', loc);
 
   const [tasks, settasks] = useState([]);
 
@@ -32,7 +34,7 @@ export const TaskList = () => {
           variables: { categoryId: Number(categoryId) },
         });
         settasks(response.data.tasks);
-        // console.log('response', response.data.tasks);
+        console.log('response', response.data);
       } catch (err) {
         if (error) toast.error('Request error');
       }
@@ -43,24 +45,18 @@ export const TaskList = () => {
   // console.log('state ', state);
 
   return (
-    state && (
-      <>
-        {!loading && data && (
-          <>
-            <div>
-              TaskList for {state?.category.name} of user: {email}
-            </div>
-
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-              {tasks.map((task: ITask) => (
-                <li key={task.id}>
-                  <Paper sx={{ p: 2, m: 1 }}>{task.name}</Paper>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </>
-    )
+    <>
+      {!loading && data && (
+        <>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+            {tasks.map((task: ITask) => (
+              <li key={task.id} style={{ margin: 0, padding: 0 }}>
+                <Paper sx={{ p: 2, m: 1 }}>{task.name}</Paper>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </>
   );
 };
