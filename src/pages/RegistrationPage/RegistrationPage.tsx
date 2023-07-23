@@ -20,6 +20,7 @@ export const RegistrationPage = () => {
       onError(error) {
         toast.error(error.message);
       },
+      fetchPolicy: 'no-cache',
     }
   );
 

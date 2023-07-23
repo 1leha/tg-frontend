@@ -23,8 +23,11 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const authLocaleValue = localStorage.getItem('persist:auth');
-  const token = authLocaleValue?.split('\\"')[1];
+  const token = localStorage.getItem('token');
+  // const token = authLocaleValue?.split('\\"')[1];
+
+  // console.log('INDEX authLocaleValue', authLocaleValue);
+  console.log('INDEX token', token);
 
   return {
     headers: {

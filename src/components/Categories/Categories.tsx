@@ -1,5 +1,6 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { CategoryList } from './CategoryList';
+import { CategoryAddModal } from './CategoryAddModal';
 
 export const Categories = () => {
   // const loc = useLocation();
@@ -15,7 +16,7 @@ export const Categories = () => {
           justifyContent: 'end',
         }}
       >
-        <Button variant="contained">Add category</Button>
+        <CategoryAddModal />
       </Box>
 
       <CategoryList />

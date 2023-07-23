@@ -18,6 +18,7 @@ function App() {
   );
 
   useEffect(() => {
+    localStorage.setItem('token', token);
     if (token && !isLoggedIn) {
       // console.log('NEED TO REFRESH');
       (async () => {

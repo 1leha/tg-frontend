@@ -14,9 +14,6 @@ export const CategoryItem = ({ data }: IData) => {
     Date.parse(String(data.dataCreated)),
     'dd.MM.yyyy'
   );
-  // console.log('data', data);
-  // console.log('data', Date.parse(String(data.dataCreated)));
-  // console.log('data', format(Date.parse(data.dataCreated), 'dd.MM.yyyy'));
 
   const handlerCategoryClick = (data: ICategory) => {
     // console.log('You clicked by: ', data.name);

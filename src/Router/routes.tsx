@@ -20,6 +20,7 @@ export const routes = [
               <PrivateRoute redirectTo="login" element={<Categories />} />
             ),
           },
+
           {
             path: ':categoryId',
             element: <PrivateRoute redirectTo="login" element={<Tasks />} />,

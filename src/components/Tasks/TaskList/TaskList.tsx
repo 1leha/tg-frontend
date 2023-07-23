@@ -1,9 +1,8 @@
 import { useLazyQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { GET_TASK_BY_CATEGORY_ID } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../helpers/hooks/useAuth';
 import { Paper } from '@mui/material';
 
 interface ITask {
@@ -16,7 +15,7 @@ interface ITask {
 
 export const TaskList = () => {
   const { categoryId } = useParams();
-  const { state } = useLocation();
+  // const { state } = useLocation();
 
   // const loc = useLocation();
   // console.log('loc', loc);
@@ -30,19 +29,18 @@ export const TaskList = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await getTasksByCategoryId({
-          variables: { categoryId: Number(categoryId) },
-        });
-        settasks(response.data.tasks);
-        console.log('response', response.data);
+        if (categoryId) {
+          console.log('categoryId', categoryId);
+          const response = await getTasksByCategoryId({
+            variables: { categoryId: Number(categoryId) },
+          });
+          settasks(response.data.tasks);
+        }
       } catch (err) {
-        if (error) toast.error('Request error');
+        if (error && !categoryId) toast.error('Request error');
       }
     })();
   }, [categoryId, error, getTasksByCategoryId]);
-
-  console.log('catecoryId', categoryId);
-  // console.log('state ', state);
 
   return (
     <>
