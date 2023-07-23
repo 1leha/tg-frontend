@@ -39,7 +39,7 @@ export const logout = createAsyncThunk('auth/logout', (__, _) => {
 export const refresh = createAsyncThunk<IAuth, IAuthState>(
   'auth/refresh',
   (user, _) => {
-    console.log('refresh user :>> ', user);
+    // console.log('refresh user :>> ', user);
     return user as IAuth;
   }
 );

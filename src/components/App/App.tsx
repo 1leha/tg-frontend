@@ -19,12 +19,12 @@ function App() {
 
   useEffect(() => {
     if (token && !isLoggedIn) {
-      console.log('NEED TO REFRESH');
+      // console.log('NEED TO REFRESH');
       (async () => {
         try {
           const res = await getCurrentUser();
           const currentUser = await res.data.getCurrentUser;
-          console.log('useEffect user', currentUser);
+          // console.log('useEffect user', currentUser);
           dispatch(
             refresh({
               token,
