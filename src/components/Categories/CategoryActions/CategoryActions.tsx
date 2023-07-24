@@ -8,6 +8,7 @@ import { DELETE_CATEGORY } from '../../../helpers/gql/mutations';
 import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../helpers/hooks/useAuth';
+import { CategoryEditModal } from '../CategoryEditModal';
 
 export const CategoryActions = ({ data }: IData) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -66,6 +67,7 @@ export const CategoryActions = ({ data }: IData) => {
         <MenuItem onClick={() => handleEdit(data.id!)}>Edit</MenuItem>
         <MenuItem onClick={() => handleDelete(data.id!)}>Delete</MenuItem>
       </Menu>
+      <CategoryEditModal data={data} />
     </div>
   );
 };
