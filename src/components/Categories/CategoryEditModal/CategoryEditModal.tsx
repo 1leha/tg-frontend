@@ -11,12 +11,17 @@ import { UPDATE_CATEGORY } from '../../../helpers/gql/mutations';
 import { useAuth } from '../../../helpers/hooks/useAuth';
 import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
-import { IData } from '../../../helpers/interfaces/categories';
+import { ICategory } from '../../../helpers/interfaces/categories';
 
-export const CategoryEditModal = ({ data }: IData) => {
-  const [open, setOpen] = useState(false);
+interface IProps {
+  data: ICategory;
+  isOpen: boolean;
+  handleClose: () => void;
+}
+
+export const CategoryEditModal = ({ data, isOpen, handleClose }: IProps) => {
   const [inputError, setinputError] = useState(false);
-  const [categoryName, setCategoryName] = useState(data?.name ?? '');
+  const [categoryName, setCategoryName] = useState(data.name ?? '');
   const { userId } = useAuth();
 
   const [updateCategoty, { error }] = useMutation(UPDATE_CATEGORY, {
@@ -28,18 +33,8 @@ export const CategoryEditModal = ({ data }: IData) => {
     },
   });
 
-  const handleClickOpen = () => {
-    setOpen(true);
-    console.log('data', data);
-    setCategoryName(data?.name ?? '');
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleUpdateCategory = () => {
-    if (data?.name && categoryName.length < 1) {
+    if (data.name && categoryName.length < 1) {
       setinputError(true);
       return;
     }
@@ -48,9 +43,7 @@ export const CategoryEditModal = ({ data }: IData) => {
         fields: { id: Number(data.id), name: String(categoryName) },
       },
     });
-
-    setCategoryName('');
-    setOpen(false);
+    handleClose();
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -64,37 +57,30 @@ export const CategoryEditModal = ({ data }: IData) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Edit category
-      </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit category</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please, change the category name:
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="category"
-            label="Input category's name"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={categoryName}
-            onChange={handleChange}
-            error={inputError}
-            helperText={inputError && 'You have to input the name!'}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleUpdateCategory} disabled={inputError}>
-            Change
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog open={isOpen} onClose={handleClose}>
+      <DialogTitle>Edit category</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Please, change the category name:</DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="category"
+          label="Input category's name"
+          type="text"
+          fullWidth
+          variant="standard"
+          value={categoryName}
+          onChange={handleChange}
+          error={inputError}
+          helperText={inputError && 'You have to input the name!'}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleUpdateCategory} disabled={inputError}>
+          Change
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
