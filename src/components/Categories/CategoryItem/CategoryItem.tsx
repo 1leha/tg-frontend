@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { useNavigate } from 'react-router';
 import { Button, Typography } from '@mui/material';
 import { CategoryActions } from '../CategoryActions';
+import { toUpperFirstLetter } from '../../../helpers/toUpperFirsLetter';
 
 export const CategoryItem = ({ data }: IData) => {
   const navigate = useNavigate();
@@ -19,10 +20,12 @@ export const CategoryItem = ({ data }: IData) => {
     navigate(`${data.id}`, { state: { category: data } });
   };
 
+  const categoryName = toUpperFirstLetter(data.name!);
+  console.log('categoryName', categoryName);
+
   return (
     <ListItem
       sx={{ mb: 2 }}
-      // disableGutters
       secondaryAction={
         <Box sx={{ display: 'flex', gap: 1 }}>
           <CategoryActions data={data} />
@@ -42,7 +45,7 @@ export const CategoryItem = ({ data }: IData) => {
       >
         <Box sx={{ flexGrow: 1, display: 'flex', gap: 4, maxWidth: '75%' }}>
           <Typography sx={{ minWidth: '60px', flexGrow: 1, flexBasis: '50%' }}>
-            {data.name}
+            {categoryName}
           </Typography>
           <Typography sx={{ minWidth: '50px', flexGrow: 1, flexBasis: '20%' }}>
             {data.tasks?.length} {data.tasks?.length === 1 ? 'task' : 'tasks'}
