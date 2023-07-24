@@ -59,21 +59,20 @@ export const TaskList = () => {
   console.log('error', error);
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
-  if (error) {
-    return null;
-  }
-
   return (
     <>
-      {/* {!loading && !error && (
+      <p>TaskList</p>
+      {!loading && !error && (
         <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-          {data.map((task: ITask) => (
-            <li key={task.id} style={{ margin: 0, padding: 0 }}>
-              <Paper sx={{ p: 2, m: 1 }}>{task.name}</Paper>
-            </li>
-          ))}
+          {data.tasks
+            .map((task: ITask) => (
+              <li key={task.id} style={{ margin: 0, padding: 0 }}>
+                <Paper sx={{ p: 2, m: 1 }}>{task.name}</Paper>
+              </li>
+            ))
+            .toSorted()}
         </ul>
-      )} */}
+      )}
     </>
   );
 };
