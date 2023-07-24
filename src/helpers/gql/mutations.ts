@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// Users -------------------------------------------------
 export const REGISTER_USER_MUTATION = gql`
   mutation registerUser($user: CreateUserInput!) {
     registerUser(registerUser: $user) {
@@ -26,6 +27,7 @@ export const LOGOUT_USER_MUTATION = gql`
   }
 `;
 
+// Categories -------------------------------------------------
 export const CREATE_CATEGORY = gql`
   mutation createCategory($category: CreateCategoryInput!) {
     createCategory(createCategoryInput: $category) {
@@ -53,6 +55,20 @@ export const UPDATE_CATEGORY = gql`
       id
       name
       dataCreated
+    }
+  }
+`;
+
+// Tasks -------------------------------------------------
+export const CREATE_TASK = gql`
+  mutation createTask($task: CreateTaskInput!) {
+    createTask(createTaskInput: $task) {
+      id
+      name
+      description
+      dataStart
+      dataEnd
+      categoryId
     }
   }
 `;

@@ -1,24 +1,29 @@
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useAuth } from '../../../helpers/hooks/useAuth';
-import { toast } from 'react-toastify';
-import { Form, Formik } from 'formik';
-import { taskValidation } from '../../../helpers/validation/taskValidation';
 import { TaskModal } from '../../common/TaskModal';
-import { TTaskValues } from '../../../helpers/interfaces/tasks';
+import { ITasks, TTaskValues } from '../../../helpers/interfaces/tasks';
+import { formatDate } from '../../../helpers/formatDate';
+import { format } from 'date-fns';
+import { toast } from 'react-toastify';
+import { useMutation } from '@apollo/client';
+import { CREATE_TASK } from '../../../helpers/gql/mutations';
+import { useParams } from 'react-router';
 
 export const TaskAddModal = () => {
+  const { categoryId } = useParams();
   const [open, setOpen] = useState(false);
   const [inputError, setinputError] = useState(false);
   // const [categoryName, setCategoryName] = useState('');
   const { userId } = useAuth();
 
-  // const [createCategory, { error }] = useMutation(CREATE_CATEGORY, {
+  const [createTask, { error }] = useMutation(CREATE_TASK, {
+    onError() {
+      toast.error(error?.message);
+    },
+  });
+
+  // const [getTasksByCategoryId, { error }] = useMutation(CREATE_TASK, {
   //   refetchQueries: [
   //     { query: GET_USER_CATEGORIES, variables: { id: Number(userId) } },
   //   ],
@@ -30,8 +35,8 @@ export const TaskAddModal = () => {
   const initialValues: TTaskValues = {
     name: '',
     description: '',
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: format(Date.now(), 'yyyy-MM-dd'),
+    endDate: format(Date.now(), 'yyyy-MM-dd'),
   };
 
   const handleClickOpen = () => {
@@ -45,14 +50,20 @@ export const TaskAddModal = () => {
     setOpen(false);
   };
 
-  const handleAddTask = () => {
-    console.log('handleAddTask');
-    // createCategory({
-    //   variables: {
-    //     category: { name: String(categoryName), userId: Number(userId) },
-    //   },
-    // });
+  const handleAddTask = async (formData: ITasks) => {
+    console.log('formData', formData);
 
+    await createTask({
+      variables: {
+        task: {
+          name: formData.name,
+          description: formData.description,
+          dataStart: new Date(formData.startDate),
+          dataEnd: new Date(formData.endDate),
+          categoryId: Number(categoryId),
+        },
+      },
+    });
     setOpen(false);
   };
 
@@ -64,29 +75,12 @@ export const TaskAddModal = () => {
         Add task
       </Button>
       <TaskModal
+        // isOpen={true}
         isOpen={open}
         initialValues={initialValues}
         handleClose={handleClose}
         handleTaskAction={handleAddTask}
       />
-      {/* <Dialog open={open} onClose={handleClose}>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleAddTask}
-          validationSchema={taskValidation}
-        >
-          <Form>
-            <DialogTitle>Add category</DialogTitle>
-            <DialogContent></DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit" onClick={handleAddTask}>
-                Save
-              </Button>
-            </DialogActions>
-          </Form>
-        </Formik>
-      </Dialog> */}
     </>
   );
 };
