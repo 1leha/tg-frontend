@@ -9,30 +9,15 @@ import { CategoryItem } from '../CategoryItem';
 import { useQuery } from '@apollo/client';
 
 export const CategoryList = () => {
-  const { userId } = useAuth();
-  console.log('userId', userId);
-
   // const loc = useLocation();
   // console.log('loc', loc);
+
+  const { userId } = useAuth();
 
   const { data, loading, error } = useQuery(GET_USER_CATEGORIES, {
     variables: { id: Number(userId) },
     fetchPolicy: 'network-only',
   });
-
-  const {
-    data: userData,
-    loading: userLoading,
-    error: userError,
-  } = useQuery(GET_CURRENT_USER_QUERY, {
-    fetchPolicy: 'network-only',
-  });
-
-  // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-  // console.log('userData', userData);
-  // console.log('userLoading', userLoading);
-  // console.log('userError', userError);
-  // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
   // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
   // console.log('data', data);

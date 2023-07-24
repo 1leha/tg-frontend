@@ -16,7 +16,6 @@ export const CategoryItem = ({ data }: IData) => {
   );
 
   const handlerCategoryClick = (data: ICategory) => {
-    // console.log('You clicked by: ', data.name);
     navigate(`${data.id}`, { state: { category: data } });
   };
 
@@ -56,10 +55,3 @@ export const CategoryItem = ({ data }: IData) => {
     </ListItem>
   );
 };
-
-// <li
-//   key={category.id}
-//   onClick={() => handlerCategoryClick(category)}
-// >
-//   <Paper sx={{ p: 2, m: 0 }}>{category.name}</Paper>
-// </li>;
