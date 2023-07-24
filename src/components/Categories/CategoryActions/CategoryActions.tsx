@@ -3,10 +3,26 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { IData } from '../../../helpers/interfaces/categories';
+import { useMutation } from '@apollo/client';
+import { DELETE_CATEGORY } from '../../../helpers/gql/mutations';
+import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
+import { toast } from 'react-toastify';
+import { useAuth } from '../../../helpers/hooks/useAuth';
 
 export const CategoryActions = ({ data }: IData) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { userId } = useAuth();
+
+  const [deleteCategory, { error }] = useMutation(DELETE_CATEGORY, {
+    refetchQueries: [
+      { query: GET_USER_CATEGORIES, variables: { id: Number(userId) } },
+    ],
+    onError() {
+      toast.error(error?.message);
+    },
+  });
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -22,7 +38,8 @@ export const CategoryActions = ({ data }: IData) => {
 
   const handleDelete = (id: number) => {
     console.log('handleDelete id', id);
-
+    console.log('userId', userId);
+    deleteCategory({ variables: { id: Number(id) } });
     setAnchorEl(null);
   };
 
