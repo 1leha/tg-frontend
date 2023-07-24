@@ -4,6 +4,7 @@ import { useAuth } from '../../../helpers/hooks/useAuth';
 import { ICategory } from '../../../helpers/interfaces/categories';
 import { CategoryItem } from '../CategoryItem';
 import { useQuery } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 export const CategoryList = () => {
   // const loc = useLocation();
@@ -14,6 +15,9 @@ export const CategoryList = () => {
   const { data, loading, error } = useQuery(GET_USER_CATEGORIES, {
     variables: { id: Number(userId) },
     fetchPolicy: 'network-only',
+    onError() {
+      toast.error('CatList');
+    },
   });
 
   // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
