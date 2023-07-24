@@ -1,7 +1,8 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { TaskList } from './TaskList';
 import { useLocation } from 'react-router';
 import { toUpperFirstLetter } from '../../helpers/toUpperFirsLetter';
+import { TaskAddModal } from './TaskAddModal';
 
 export const Tasks = () => {
   const { state } = useLocation();
@@ -13,7 +14,7 @@ export const Tasks = () => {
         <Typography component="span" sx={{ flexGrow: 1 }}>
           {categoryName}
         </Typography>
-        <Button>Add task</Button>
+        <TaskAddModal />
       </Box>
       <TaskList />
     </>
