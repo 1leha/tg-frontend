@@ -2,29 +2,17 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { IData } from '../../../helpers/interfaces/categories';
-import { useMutation } from '@apollo/client';
-import { DELETE_CATEGORY } from '../../../helpers/gql/mutations';
-import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
-import { toast } from 'react-toastify';
-import { useAuth } from '../../../helpers/hooks/useAuth';
-import { CategoryEditModal } from '../CategoryEditModal';
+
+import { CategoryEditPopup } from '../CategoryEditPopup';
 import { useState } from 'react';
+import { CategoryDeletePopup } from '../CategoryDeletePopup';
 
 export const CategoryActions = ({ data }: IData) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
 
   const open = Boolean(anchorEl);
-  const { userId } = useAuth();
-
-  const [deleteCategory, { error }] = useMutation(DELETE_CATEGORY, {
-    refetchQueries: [
-      { query: GET_USER_CATEGORIES, variables: { id: Number(userId) } },
-    ],
-    onError() {
-      toast.error(error?.message);
-    },
-  });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,8 +28,8 @@ export const CategoryActions = ({ data }: IData) => {
   };
 
   const handleDelete = (id: number) => {
-    deleteCategory({ variables: { id: Number(id) } });
     setAnchorEl(null);
+    setOpenDeletePopup(true);
   };
 
   return (
@@ -67,10 +55,17 @@ export const CategoryActions = ({ data }: IData) => {
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
         <MenuItem onClick={() => handleDelete(data.id!)}>Delete</MenuItem>
       </Menu>
-      <CategoryEditModal
+
+      <CategoryEditPopup
         data={data}
         isOpen={openEditModal}
         handleClose={() => setOpenEditModal(false)}
+      />
+
+      <CategoryDeletePopup
+        id={data.id!}
+        isOpen={openDeletePopup}
+        handleClose={() => setOpenDeletePopup(false)}
       />
     </div>
   );
