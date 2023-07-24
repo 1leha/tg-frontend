@@ -15,27 +15,38 @@ export const routes = [
         element: <PrivateRoute redirectTo="login" element={<TaskPage />} />,
         children: [
           {
-            path: '/',
-            element: (
-              <PrivateRoute redirectTo="login" element={<Categories />} />
-            ),
+            path: 'categories',
+            element: <Categories />,
           },
 
           {
-            path: ':categoryId',
-            element: <PrivateRoute redirectTo="login" element={<Tasks />} />,
+            path: 'categories/:categoryId',
+            element: <Tasks />,
           },
         ],
       },
       {
         path: 'login',
-        element: <RestrictedRoute redirectTo="/" element={<LoginPage />} />,
+        element: (
+          <RestrictedRoute redirectTo="/categories" element={<LoginPage />} />
+        ),
       },
       {
         path: 'register',
         element: (
-          <RestrictedRoute redirectTo="/" element={<RegistrationPage />} />
+          <RestrictedRoute
+            redirectTo="/categories"
+            element={<RegistrationPage />}
+          />
         ),
+      },
+      {
+        path: 'logout',
+        element: <RestrictedRoute redirectTo="/" element={<LoginPage />} />,
+      },
+      {
+        path: '*',
+        element: <LoginPage />,
       },
     ],
   },

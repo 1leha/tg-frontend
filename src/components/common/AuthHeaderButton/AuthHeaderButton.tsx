@@ -10,12 +10,13 @@ import { EAuthButtons } from '../../../helpers/enums/authButtons';
 export const AuthHeaderButton = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
-  const [logoutUser] = useMutation(LOGOUT_USER_MUTATION);
+  const [logoutUser, { client }] = useMutation(LOGOUT_USER_MUTATION);
 
   const handlerLogout = async () => {
     await logoutUser();
     await dispatch(logout());
     localStorage.clear();
+    client.resetStore();
   };
 
   switch (pathname) {
