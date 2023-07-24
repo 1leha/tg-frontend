@@ -8,13 +8,12 @@ import { useNavigate } from 'react-router';
 import { Button, Typography } from '@mui/material';
 import { CategoryActions } from '../CategoryActions';
 import { toUpperFirstLetter } from '../../../helpers/toUpperFirsLetter';
+import { formatDate } from '../../../helpers/formatDate';
 
 export const CategoryItem = ({ data }: IData) => {
   const navigate = useNavigate();
-  const createdData = format(
-    Date.parse(String(data.dataCreated)),
-    'dd.MM.yyyy'
-  );
+
+  const createdData = formatDate(data.dataCreated!);
 
   const handlerCategoryClick = (data: ICategory) => {
     navigate(`${data.id}`, { state: { category: data } });
