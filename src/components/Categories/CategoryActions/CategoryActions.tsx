@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,9 +7,12 @@ import { DELETE_CATEGORY } from '../../../helpers/gql/mutations';
 import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../helpers/hooks/useAuth';
+import { CategoryModal } from '../../common/CategoryModal';
+import { useState } from 'react';
 
 export const CategoryActions = ({ data }: IData) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [toggleEditModal, setToggleEditModal] = useState(false);
   const open = Boolean(anchorEl);
   const { userId } = useAuth();
 
@@ -34,6 +36,7 @@ export const CategoryActions = ({ data }: IData) => {
   const handleEdit = (id: number) => {
     console.log('handleEdit id', id);
     setAnchorEl(null);
+    setToggleEditModal(!toggleEditModal);
   };
 
   const handleDelete = (id: number) => {
@@ -43,6 +46,7 @@ export const CategoryActions = ({ data }: IData) => {
     setAnchorEl(null);
   };
 
+  console.log('toggleEditModal', toggleEditModal);
   return (
     <div>
       <Button
@@ -63,7 +67,14 @@ export const CategoryActions = ({ data }: IData) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={() => handleEdit(data.id!)}>Edit</MenuItem>
+        <MenuItem onClick={() => handleEdit(data.id!)}>
+          {' '}
+          <CategoryModal
+            type="edit"
+            data={data}
+            isModalOpen={toggleEditModal}
+          />
+        </MenuItem>
         <MenuItem onClick={() => handleDelete(data.id!)}>Delete</MenuItem>
       </Menu>
     </div>

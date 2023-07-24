@@ -46,3 +46,13 @@ export const DELETE_CATEGORY = gql`
     deleteCategory(id: $id)
   }
 `;
+
+export const UPDATE_CATEGORY = gql`
+  mutation updateCategoty($data: UpdateCategoryInput!) {
+    updateCategory(updateCategoryInput: $data) {
+      id
+      name
+      dataCreated
+    }
+  }
+`;

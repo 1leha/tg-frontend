@@ -12,8 +12,23 @@ import { useAuth } from '../../../helpers/hooks/useAuth';
 import { GET_USER_CATEGORIES } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
 
-export const CategoryAddModal = () => {
-  const [open, setOpen] = useState(false);
+// interface IData {
+//   key: 'edit' | 'add';
+// }
+
+interface IModalType {
+  type: 'edit' | 'add';
+}
+
+interface IProps extends IModalType {
+  data?: any;
+  toggleModal?: void;
+  isModalOpen?: boolean;
+}
+
+export const CategoryModal = ({ type, data, isModalOpen }: IProps) => {
+  console.log('type', type);
+  const [open, setOpen] = useState(isModalOpen ? true : false);
   const [inputError, setinputError] = useState(false);
   const [categoryName, setCategoryName] = useState('');
   const { userId } = useAuth();
@@ -26,6 +41,8 @@ export const CategoryAddModal = () => {
       toast.error(error?.message);
     },
   });
+
+  console.log('isModalOpen', isModalOpen);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,11 +59,18 @@ export const CategoryAddModal = () => {
       setinputError(true);
       return;
     }
-    createCategory({
-      variables: {
-        category: { name: String(categoryName), userId: Number(userId) },
-      },
-    });
+    switch (type) {
+      case 'edit':
+        break;
+
+      default:
+        createCategory({
+          variables: {
+            category: { name: String(categoryName), userId: Number(userId) },
+          },
+        });
+        break;
+    }
 
     setCategoryName('');
     setOpen(false);
@@ -64,14 +88,20 @@ export const CategoryAddModal = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Add category
-      </Button>
+      {type === 'add' && (
+        <Button variant="outlined" onClick={handleClickOpen}>
+          Add category
+        </Button>
+      )}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add category</DialogTitle>
+        <DialogTitle>
+          {type === 'add' ? 'Add category' : 'Edit category'}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please, input a new category name:
+            {type === 'add'
+              ? 'Please, input a new category name:'
+              : 'Please, change the category name:'}
           </DialogContentText>
           <TextField
             autoFocus
@@ -90,7 +120,7 @@ export const CategoryAddModal = () => {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleAddCategory} disabled={inputError}>
-            Add
+            {type === 'add' ? 'Add' : 'Change'}
           </Button>
         </DialogActions>
       </Dialog>
