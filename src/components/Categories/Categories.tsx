@@ -3,9 +3,6 @@ import { CategoryList } from './CategoryList';
 import { CategoryAddModal } from './CategoryAddModal';
 
 export const Categories = () => {
-  // const loc = useLocation();
-  // console.log('loc', loc);
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <Box
