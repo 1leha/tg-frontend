@@ -10,8 +10,8 @@ export const Tasks = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
-        <Typography component="span" sx={{ flexGrow: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography component="p" variant="h5" sx={{ flexGrow: 1 }}>
           {categoryName}
         </Typography>
         <TaskAddModal />
