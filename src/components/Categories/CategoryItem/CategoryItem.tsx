@@ -20,7 +20,6 @@ export const CategoryItem = ({ data }: IData) => {
   };
 
   const categoryName = toUpperFirstLetter(data.name!);
-  console.log('categoryName', categoryName);
 
   return (
     <ListItem
