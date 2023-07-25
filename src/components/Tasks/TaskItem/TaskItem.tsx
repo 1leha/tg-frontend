@@ -51,7 +51,7 @@ export const TaskItem = ({ task }: IProps) => {
 
   const handleEditTask = async (formData: ITasksInput) => {
     console.log('formData', formData);
-    const aa = await updateTask({
+    await updateTask({
       variables: {
         task: {
           name: formData.name,
@@ -62,7 +62,6 @@ export const TaskItem = ({ task }: IProps) => {
         },
       },
     });
-    console.log('aa', aa);
     setOpenEditModal(false);
   };
 
