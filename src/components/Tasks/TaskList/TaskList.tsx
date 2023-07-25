@@ -14,16 +14,10 @@ export const TaskList = () => {
       categoryId: Number(categoryId),
       fetchPolicy: 'network-only',
       onError() {
-        toast.error('TaskList');
+        toast.error(error?.message);
       },
     },
   });
-
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-  console.log('data', data);
-  console.log('loading', loading);
-  console.log('error', error);
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
   return (
     <>
