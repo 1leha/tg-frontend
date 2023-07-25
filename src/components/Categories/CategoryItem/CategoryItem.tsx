@@ -1,5 +1,4 @@
 import { ICategory, IData } from '../../../helpers/interfaces/categories';
-import { format } from 'date-fns';
 
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';

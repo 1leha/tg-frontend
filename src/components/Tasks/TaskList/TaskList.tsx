@@ -1,9 +1,7 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router';
 import { GET_TASK_BY_CATEGORY_ID } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
-import { Paper } from '@mui/material';
 import { ITaskResponse } from '../../../helpers/interfaces/tasks';
 import { TaskItem } from '../TaskItem';
 
