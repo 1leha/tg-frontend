@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { logout } from '../../../redux/auth/auth.operations';
 import { useMutation } from '@apollo/client';
 import { LOGOUT_USER_MUTATION } from '../../../helpers/gql/mutations';
 import { EAuthButtons } from '../../../helpers/enums/authButtons';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const AuthHeaderButton = () => {
   const { pathname } = useLocation();
@@ -44,14 +45,15 @@ export const AuthHeaderButton = () => {
 
     default:
       return (
-        <Button
+        <IconButton
+          size="small"
           color="inherit"
           component={NavLink}
           to={EAuthButtons.logout.toLowerCase()}
           onClick={handlerLogout}
         >
-          {EAuthButtons.logout}
-        </Button>
+          <LogoutIcon />
+        </IconButton>
       );
   }
 };
