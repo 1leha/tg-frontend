@@ -22,21 +22,19 @@ export const TaskList = () => {
   return (
     <>
       {!loading && !error && (
-        <>
-          <Grid container spacing={2} sx={{ mt: 4 }}>
-            {data.tasks
-              .map((task: ITaskResponse) => (
-                <Grid key={task.id} item xs={12} sm={12} md={6} lg={4}>
-                  <TaskItem task={task} />
-                </Grid>
-              ))
-              .toSorted((a: React.ReactElement, b: React.ReactElement) => {
-                const dataA = Number(a.key);
-                const dataB = Number(b.key);
-                return dataB - dataA;
-              })}
-          </Grid>
-        </>
+        <Grid container spacing={2} sx={{ mt: 4 }}>
+          {data.tasks
+            .map((task: ITaskResponse) => (
+              <Grid key={task.id} item xs={12} sm={12} md={6} lg={4}>
+                <TaskItem task={task} />
+              </Grid>
+            ))
+            .toSorted((a: React.ReactElement, b: React.ReactElement) => {
+              const dataA = Number(a.key);
+              const dataB = Number(b.key);
+              return dataB - dataA;
+            })}
+        </Grid>
       )}
     </>
   );
