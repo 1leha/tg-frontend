@@ -4,6 +4,7 @@ import { GET_TASK_BY_CATEGORY_ID } from '../../../helpers/gql/queries';
 import { toast } from 'react-toastify';
 import { ITaskResponse } from '../../../helpers/interfaces/tasks';
 import { TaskItem } from '../TaskItem';
+import { Grid } from '@mui/material';
 
 export const TaskList = () => {
   const { categoryId } = useParams();
@@ -13,33 +14,29 @@ export const TaskList = () => {
       categoryId: Number(categoryId),
       fetchPolicy: 'network-only',
       onError() {
-        toast.error('TaskList');
+        toast.error(error?.message);
       },
     },
   });
 
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-  console.log('data', data);
-  console.log('loading', loading);
-  console.log('error', error);
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
   return (
     <>
       {!loading && !error && (
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-          {data.tasks
-            .map((task: ITaskResponse) => (
-              <li key={task.id} style={{ margin: 0, padding: 0 }}>
-                <TaskItem task={task} />
-              </li>
-            ))
-            .toSorted((a: React.ReactElement, b: React.ReactElement) => {
-              const dataA = Number(a.key);
-              const dataB = Number(b.key);
-              return dataB - dataA;
-            })}
-        </ul>
+        <>
+          <Grid container spacing={2} sx={{ mt: 4 }}>
+            {data.tasks
+              .map((task: ITaskResponse) => (
+                <Grid key={task.id} item xs={12} sm={12} md={6} lg={4}>
+                  <TaskItem task={task} />
+                </Grid>
+              ))
+              .toSorted((a: React.ReactElement, b: React.ReactElement) => {
+                const dataA = Number(a.key);
+                const dataB = Number(b.key);
+                return dataB - dataA;
+              })}
+          </Grid>
+        </>
       )}
     </>
   );
