@@ -37,8 +37,6 @@ export const TaskAddModal = () => {
   };
 
   const handleClose = () => {
-    console.log('handleClose');
-
     setOpen(false);
   };
 

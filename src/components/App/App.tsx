@@ -18,10 +18,8 @@ function App() {
   );
 
   useEffect(() => {
-    console.log('REFRESH');
     localStorage.setItem('token', token);
     if (token && !isLoggedIn) {
-      console.log('NEED TO REFRESH');
       (async () => {
         try {
           const res = await getCurrentUser();

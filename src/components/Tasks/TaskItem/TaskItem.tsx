@@ -50,7 +50,6 @@ export const TaskItem = ({ task }: IProps) => {
   });
 
   const handleEditTask = async (formData: ITasksInput) => {
-    console.log('formData', formData);
     await updateTask({
       variables: {
         task: {
