@@ -44,7 +44,7 @@ export const CategoryAddModal = () => {
     }
     createCategory({
       variables: {
-        category: { name: String(categoryName), userId: Number(userId) },
+        category: { name: String(categoryName).trim(), userId: Number(userId) },
       },
     });
 
@@ -53,7 +53,7 @@ export const CategoryAddModal = () => {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCategoryName(event.target.value.trim());
+    setCategoryName(event.target.value);
 
     if (categoryName.length < 0) {
       setinputError(true);
@@ -74,6 +74,7 @@ export const CategoryAddModal = () => {
             Please, input a new category name:
           </DialogContentText>
           <TextField
+            autoComplete="off"
             autoFocus
             margin="dense"
             id="category"

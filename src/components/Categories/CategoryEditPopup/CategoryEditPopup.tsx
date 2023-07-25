@@ -40,14 +40,14 @@ export const CategoryEditPopup = ({ data, isOpen, handleClose }: IProps) => {
     }
     updateCategoty({
       variables: {
-        fields: { id: Number(data.id), name: String(categoryName) },
+        fields: { id: Number(data.id), name: String(categoryName).trim() },
       },
     });
     handleClose();
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCategoryName(event.target.value.trim());
+    setCategoryName(event.target.value);
 
     if (categoryName.length < 0) {
       setinputError(true);
@@ -62,6 +62,7 @@ export const CategoryEditPopup = ({ data, isOpen, handleClose }: IProps) => {
       <DialogContent>
         <DialogContentText>Please, change the category name:</DialogContentText>
         <TextField
+          autoComplete="off"
           autoFocus
           margin="dense"
           id="category"

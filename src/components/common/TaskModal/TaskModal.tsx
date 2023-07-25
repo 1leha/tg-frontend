@@ -49,6 +49,7 @@ export const TaskModal = ({
               <DialogContent>
                 <TextField
                   sx={{ mt: 2 }}
+                  autoFocus
                   fullWidth
                   autoComplete="off"
                   id="name"
