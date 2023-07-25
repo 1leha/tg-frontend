@@ -72,6 +72,19 @@ export const CREATE_TASK = gql`
     }
   }
 `;
+
+export const UPDATE_TASK = gql`
+  mutation updateTask($task: UpdateTaskInput!) {
+    updateTask(updateTaskInput: $task) {
+      id
+      name
+      description
+      dataStart
+      dataEnd
+    }
+  }
+`;
+
 export const DELETE_TASK = gql`
   mutation deleteTask($taskId: Float!) {
     deleteTask(id: $taskId)
