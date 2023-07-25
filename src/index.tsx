@@ -17,17 +17,14 @@ import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { REACT_APP_HOST_BACKEND } from './helpers/constants/options';
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_HOST_BACKEND,
+  uri: REACT_APP_HOST_BACKEND,
 });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
-  // const token = authLocaleValue?.split('\\"')[1];
-
-  // console.log('INDEX authLocaleValue', authLocaleValue);
-  console.log('INDEX token', token);
 
   return {
     headers: {
