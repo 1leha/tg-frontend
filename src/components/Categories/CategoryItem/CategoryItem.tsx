@@ -3,7 +3,7 @@ import { ICategory, IData } from '../../../helpers/interfaces/categories';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Button, Typography } from '@mui/material';
 import { CategoryActions } from '../CategoryActions';
 import { toUpperFirstLetter } from '../../../helpers/toUpperFirsLetter';
@@ -11,11 +11,12 @@ import { formatDate } from '../../../helpers/formatDate';
 
 export const CategoryItem = ({ data }: IData) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const createdData = formatDate(data.dataCreated!);
 
   const handlerCategoryClick = (data: ICategory) => {
-    navigate(`${data.id}`, { state: { category: data } });
+    navigate(`${data.id}`, { state: { category: data, from: location } });
   };
 
   const categoryName = toUpperFirstLetter(data.name!);
