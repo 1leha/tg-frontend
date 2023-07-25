@@ -26,7 +26,6 @@ function App() {
         try {
           const res = await getCurrentUser();
           const currentUser = await res.data.getCurrentUser;
-          // console.log('useEffect user', currentUser);
           dispatch(
             refresh({
               token,

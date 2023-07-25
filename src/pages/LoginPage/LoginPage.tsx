@@ -10,7 +10,6 @@ import { LOGIN_USER_MUTATION } from '../../helpers/gql/mutations';
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
 
 export const LoginPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();

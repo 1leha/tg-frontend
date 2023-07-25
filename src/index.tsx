@@ -24,9 +24,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
-  // const token = authLocaleValue?.split('\\"')[1];
 
-  // console.log('INDEX authLocaleValue', authLocaleValue);
   console.log('INDEX token', token);
 
   return {
