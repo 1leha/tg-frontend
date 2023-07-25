@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { TaskModal } from '../../common/TaskModal';
-import { ITasks, TTaskValues } from '../../../helpers/interfaces/tasks';
+import { ITasksInput, TTaskValues } from '../../../helpers/interfaces/tasks';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import { useMutation } from '@apollo/client';
@@ -42,9 +42,7 @@ export const TaskAddModal = () => {
     setOpen(false);
   };
 
-  const handleAddTask = async (formData: ITasks) => {
-    console.log('formData', formData);
-
+  const handleAddTask = async (formData: ITasksInput) => {
     await createTask({
       variables: {
         task: {

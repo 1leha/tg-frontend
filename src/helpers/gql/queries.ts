@@ -47,6 +47,7 @@ export const GET_TASK_BY_CATEGORY_ID = gql`
     tasks(categoryId: $categoryId) {
       id
       name
+      description
       dataStart
       dataEnd
       category {
