@@ -72,3 +72,8 @@ export const CREATE_TASK = gql`
     }
   }
 `;
+export const DELETE_TASK = gql`
+  mutation deleteTask($taskId: Float!) {
+    deleteTask(id: $taskId)
+  }
+`;
