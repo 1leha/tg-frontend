@@ -8,10 +8,12 @@ import { Button, Typography } from '@mui/material';
 import { CategoryActions } from '../CategoryActions';
 import { toUpperFirstLetter } from '../../../helpers/toUpperFirsLetter';
 import { formatDate } from '../../../helpers/formatDate';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const CategoryItem = ({ data }: IData) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isMw600 = useMediaQuery('(max-width:600px)');
 
   const createdData = formatDate(data.dataCreated!);
 
@@ -25,7 +27,7 @@ export const CategoryItem = ({ data }: IData) => {
     <ListItem
       sx={{ mb: 2 }}
       secondaryAction={
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 0 }}>
           <CategoryActions data={data} />
           <Button onClick={() => handlerCategoryClick(data)}>More</Button>
         </Box>
@@ -41,11 +43,28 @@ export const CategoryItem = ({ data }: IData) => {
         }}
         onClick={() => handlerCategoryClick(data)}
       >
-        <Box sx={{ flexGrow: 1, display: 'flex', gap: 4, maxWidth: '75%' }}>
-          <Typography sx={{ minWidth: '60px', flexGrow: 1, flexBasis: '50%' }}>
+        <Box
+          sx={
+            isMw600
+              ? {
+                  flexGrow: 1,
+                  display: 'flex',
+                  gap: 0,
+                  flexDirection: 'column',
+                  maxWidth: '70%',
+                }
+              : {
+                  flexGrow: 1,
+                  display: 'flex',
+                  gap: 2,
+                  maxWidth: '75%',
+                }
+          }
+        >
+          <Typography sx={{ minWidth: '50px', flexGrow: 1, flexBasis: '40%' }}>
             {categoryName}
           </Typography>
-          <Typography sx={{ minWidth: '50px', flexGrow: 1, flexBasis: '20%' }}>
+          <Typography sx={{ minWidth: '50px', flexGrow: 1, flexBasis: '30%' }}>
             {data.tasks?.length} {data.tasks?.length === 1 ? 'task' : 'tasks'}
           </Typography>
           <Typography sx={{ minWidth: '60px', flexGrow: 1, flexBasis: '30%' }}>
