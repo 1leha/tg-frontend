@@ -18,7 +18,7 @@ export const TaskItem = ({ task }: IProps) => {
 
   return (
     <>
-      <Card sx={{ minWidth: 275, maxWidth: 325 }}>
+      <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {task.category?.name}
