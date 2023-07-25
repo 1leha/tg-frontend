@@ -1,36 +1,29 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { useAuth } from '../../../helpers/hooks/useAuth';
 import { TaskModal } from '../../common/TaskModal';
 import { ITasks, TTaskValues } from '../../../helpers/interfaces/tasks';
-import { formatDate } from '../../../helpers/formatDate';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import { useMutation } from '@apollo/client';
 import { CREATE_TASK } from '../../../helpers/gql/mutations';
 import { useParams } from 'react-router';
+import { GET_TASK_BY_CATEGORY_ID } from '../../../helpers/gql/queries';
 
 export const TaskAddModal = () => {
   const { categoryId } = useParams();
   const [open, setOpen] = useState(false);
-  const [inputError, setinputError] = useState(false);
-  // const [categoryName, setCategoryName] = useState('');
-  const { userId } = useAuth();
 
   const [createTask, { error }] = useMutation(CREATE_TASK, {
+    refetchQueries: [
+      {
+        query: GET_TASK_BY_CATEGORY_ID,
+        variables: { categoryId: Number(categoryId) },
+      },
+    ],
     onError() {
       toast.error(error?.message);
     },
   });
-
-  // const [getTasksByCategoryId, { error }] = useMutation(CREATE_TASK, {
-  //   refetchQueries: [
-  //     { query: GET_USER_CATEGORIES, variables: { id: Number(userId) } },
-  //   ],
-  //   onError() {
-  //     toast.error(error?.message);
-  //   },
-  // });
 
   const initialValues: TTaskValues = {
     name: '',
@@ -44,7 +37,6 @@ export const TaskAddModal = () => {
   };
 
   const handleClose = () => {
-    // setCategoryName('');
     console.log('handleClose');
 
     setOpen(false);
@@ -67,15 +59,12 @@ export const TaskAddModal = () => {
     setOpen(false);
   };
 
-  // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {};
-
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
         Add task
       </Button>
       <TaskModal
-        // isOpen={true}
         isOpen={open}
         initialValues={initialValues}
         handleClose={handleClose}
