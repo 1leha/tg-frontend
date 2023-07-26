@@ -1,12 +1,12 @@
 # Task manager
 
-This is a fullstack project:\
+This is a fullstack project:
 
 Frontend (this page) [Backend](https://github.com/1leha/tg-backend).
 
 ## Description
 
-This is a project of simple task manager with user auth.\
+This is a project of simple task manager with user auth.
 
 After authorization, the user gets to the categories page. For example you can
 make categories for different departments: managers, designers, boss 😊.
