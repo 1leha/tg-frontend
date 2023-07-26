@@ -12,7 +12,7 @@ export const Header = () => {
       <Container fixed>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            TG task menager
+            TG task manager
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
