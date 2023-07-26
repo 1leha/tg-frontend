@@ -12,7 +12,7 @@ export const Tasks = () => {
   const categoryName = toUpperFirstLetter(state.category.name);
 
   const handleBack = () => {
-    navigate(state.from);
+    navigate(state.from, { replace: true });
   };
 
   return (
