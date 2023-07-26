@@ -11,13 +11,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export const AuthHeaderButton = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
-  const [logoutUser, { client }] = useMutation(LOGOUT_USER_MUTATION);
+  const [logoutUser] = useMutation(LOGOUT_USER_MUTATION);
 
   const handlerLogout = async () => {
     await logoutUser();
     await dispatch(logout());
     localStorage.clear();
-    client.resetStore();
   };
 
   switch (pathname) {
