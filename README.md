@@ -2,7 +2,8 @@
 
 This is a fullstack project:
 
-Frontend (this page) [Backend](https://github.com/1leha/tg-backend).
+Frontend (this page)\
+[Backend](https://github.com/1leha/tg-backend).
 
 ## Description
 
